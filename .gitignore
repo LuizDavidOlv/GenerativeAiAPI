@@ -1,4 +1,2 @@
 API/.env
-API/__pycache__/sample.cpython-310.pyc
-API/__pycache__/pinecone.cpython-310.pyc
-API/__pycache__/pineconeController.cpython-310.pyc
+API/__pycache__
