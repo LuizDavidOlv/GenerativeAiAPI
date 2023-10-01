@@ -25,7 +25,7 @@ def version():
         raise HTTPException(status_code=400, detail=f'Error:  {e}') 
 
 @router.get("/list-indexes/")
-def text_davinci_003():
+def list_indexes():
     try:
         return pinecone.list_indexes()
     except Exception as e:

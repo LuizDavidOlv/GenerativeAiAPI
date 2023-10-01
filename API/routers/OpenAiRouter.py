@@ -11,11 +11,6 @@ router = APIRouter(
     tags=["Open AI"]
 )
 
-@router.get("/")
-def read_root():
-    print("Hello World")
-    return {"Open-source LLM Generative AI Serving"}
-
 @router.post("/text-davinci-003/")
 def text_davinci_003(data: Instructions):
     try:
