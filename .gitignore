@@ -1,2 +1,3 @@
 API/.env
 API/__pycache__
+API/routers/__pycache__
