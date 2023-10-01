@@ -7,7 +7,8 @@ class Instructions(BaseModel):
     instruction: str
 
 router = APIRouter(
-    prefix="/openai"
+    prefix="/openai",
+    tags=["Open AI"]
 )
 
 @router.get("/")

@@ -13,7 +13,8 @@ class Instructions(BaseModel):
     instruction: str
 
 router = APIRouter(
-    prefix="/pinecone"
+    prefix="/pinecone",
+    tags=["Pinecone"]
 )
 
 @router.get("/version/")

@@ -12,8 +12,8 @@ pinecone.init(
 )
 
 app = FastAPI(
-    title="My API",
-    description="This is a very fancy API",
+    title="Generative AI API",
+    description="LLM Generative AI Serving",
     version="0.1.0",
     openapi_url="/api/v1/openapi.json",
     docs_url="/api/v1/docs",
@@ -23,11 +23,3 @@ app = FastAPI(
 
 app.include_router(OpenAiRouter.router)
 app.include_router(PineconeRouter.router)
-
-# Add the Swagger middleware to the app
-#app.add_middleware(SwaggerMiddleware)
-
-
-@app.get("/")
-async def root():
-    return {"message": "Hello Bigger Applications!"}
