@@ -1,4 +1,5 @@
 import openai
+import os
 import pinecone
 from fastapi import HTTPException, APIRouter
 from pydantic import BaseModel
@@ -79,7 +80,7 @@ def privateDB_prompt(text: str):
     vector_store =  Pinecone.from_existing_index(pinecone_index, embeddings)
     retrieverModel = vector_store.as_retriever(search_type='similarity', search_kwargs={'k': 10})
     chain = RetrievalQA.from_chain_type(llm=llmModel, chain_type='stuff',retriever=retrieverModel)
-    query = 'test'
+    query = text
     answer = chain.run(query)
     return answer
     
