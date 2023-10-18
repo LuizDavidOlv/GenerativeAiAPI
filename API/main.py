@@ -1,4 +1,4 @@
-from routers import OpenAiRouter, PineconeRouter
+from API.routers import OpenAiRouter, PineconeRouter
 from fastapi import FastAPI, FastAPI
 from dotenv import load_dotenv, find_dotenv
 import pinecone

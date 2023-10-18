@@ -1,0 +1,17 @@
+# docker-compose.yml
+
+version: '3.8'
+
+services:
+  web:
+    build: .
+    command: uvicorn API.main:app --reload --host 0.0.0.0 --port 5000
+    volumes:
+      - .:/app
+    ports:
+      - 8000:5000
+      
+#Run the following commands (local)  
+#docker-compose build
+#docker-compose up -d
+#browser: http://127.0.0.1:8000/

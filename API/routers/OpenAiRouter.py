@@ -32,7 +32,7 @@ def text_davinci_003(data: Instructions):
         output = llm(data.instruction)
         return output
     except Exception as e:
-        raise HTTPException(status_code=400, detail=f'Error:  {e.body}') 
+        raise HTTPException(status_code=400, detail=f'Error:  {e}') 
     
 @router.post("/ironic-prompt/")
 def basic_prompt(data: Instructions):
@@ -45,7 +45,7 @@ def basic_prompt(data: Instructions):
         output = llm(messages)
         return output.content
     except Exception as e:
-        raise HTTPException(status_code=400, detail=f'Error:  {e.body}') 
+        raise HTTPException(status_code=400, detail=f'Error:  {e}') 
 
 @router.post("/warrior-prompt/")
 def template_prompt(inputText: str, outputLanguage: str, temp: float, model: str):
