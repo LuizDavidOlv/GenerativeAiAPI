@@ -3,6 +3,7 @@ from fastapi import FastAPI, FastAPI
 from dotenv import load_dotenv, find_dotenv
 import pinecone
 import os
+import openai
 
 load_dotenv(find_dotenv(), override=True)
 
@@ -10,6 +11,8 @@ pinecone.init(
     api_key=os.environ.get('PINECONE_API_KEY'),
     environment=os.environ.get('PINECONE_ENV')
 )
+
+openai.api_key = os.getenv("OPENAI_API_KEY")
 
 app = FastAPI(
     title="Generative AI API",
