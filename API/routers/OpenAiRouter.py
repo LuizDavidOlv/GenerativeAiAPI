@@ -1,3 +1,4 @@
+from fastapi.responses import StreamingResponse
 import openai
 import os
 import pinecone
@@ -131,3 +132,55 @@ def fine_tune_use_model(text: str):
     except Exception as e:
         raise HTTPException(status_code=400, detail=f'Error:  {e}')
 
+
+@router.get("/stream-completion/")
+async def stream():
+    try:
+        async with openai.StreamingCompletion.create(
+            stop=["\n", "Human:", "AI:"],
+            model="curie",
+            temperature=0.9,
+            max_tokens=100,
+            top_p=1,
+            frequency_penalty=0,
+            presence_penalty=0.6,
+            best_of=1,
+            n=1,
+            stream=True,
+        ) as stream:
+            async for chunk in stream:
+                yield chunk
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=f'Error:  {e}')
+    
+@router.get("/completion/")
+def completion(text: str):
+    return StreamingResponse(stream(text), media_type="text/event-stream")
+    
+
+@router.post("/chat-completion/")
+def chat_completion(text: str):
+    try:
+        completion = openai.ChatCompletion.create(
+            model= "text-davinci-003",
+            prompt=f'{text}',
+            temperature=0,
+            max_tokens=100,
+            stream = True,
+            stop=["\n", "Human:", "AI:"],
+        )
+        return completion.choices[0].text
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=f'Error:  {e}')
+    
+
+from time import sleep
+
+def stream(text: str):
+    try:
+        completion = openai.Completion.create(engine="text-davinci-003", prompt=text, stream=True)
+        for line in completion:
+            sleep(0.3)
+            yield 'data: %s\n\n' % line.choices[0].text
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=f'Error:  {e}')

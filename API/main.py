@@ -1,3 +1,4 @@
+from fastapi.responses import HTMLResponse
 from API.routers import OpenAiRouter, PineconeRouter
 from fastapi import FastAPI, FastAPI
 from dotenv import load_dotenv, find_dotenv
@@ -24,5 +25,29 @@ app = FastAPI(
     swagger_ui=True  # This line enables Swagger UI
 )
 
+
 app.include_router(OpenAiRouter.router)
 app.include_router(PineconeRouter.router)
+
+def generate_html_response():
+    html_content = """
+    <!DOCTYPE html>
+    <html>
+        <body>
+        <h1>response:</h1>
+        <div id="result"></div>
+        <script>
+        var source = new EventSource("/openai/completion?text=Tell me a joke");
+        source.onmessage = function(event) {
+            document.getElementById("result").innerHTML += event.data + "<br>";
+        };
+        </script>
+        </body>
+    </html>
+    """
+    return HTMLResponse(content=html_content, status_code=200)
+
+
+@app.get("/items/", response_class=HTMLResponse)
+async def read_items():
+    return generate_html_response()
