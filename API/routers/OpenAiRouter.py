@@ -2,12 +2,13 @@ from fastapi.responses import StreamingResponse
 import openai
 import os
 import pinecone
+from time import sleep
 from fastapi import HTTPException, APIRouter
 from pydantic import BaseModel
 from langchain import PromptTemplate
 from langchain.llms import OpenAI
 from langchain.chat_models import ChatOpenAI
-from langchain.chains import LLMChain, RetrievalQA
+from langchain.chains import LLMChain, RetrievalQA, ConversationalRetrievalChain
 from langchain.embeddings import OpenAIEmbeddings
 from langchain.vectorstores import Pinecone
 from langchain.schema import(
@@ -15,7 +16,7 @@ from langchain.schema import(
     SystemMessage
 )
 
-
+chat_history = []
 class Instructions(BaseModel):
     text: str
     model: str
@@ -174,13 +175,26 @@ def chat_completion(text: str):
         raise HTTPException(status_code=400, detail=f'Error:  {e}')
     
 
-from time import sleep
-
 def stream(text: str):
     try:
         completion = openai.Completion.create(engine="text-davinci-003", prompt=text, stream=True)
         for line in completion:
             sleep(0.3)
             yield 'data: %s\n\n' % line.choices[0].text
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=f'Error:  {e}')
+    
+
+@router.post("/prompt-with-memory/")
+def prompt_with_memory(index_name: str, question: str):
+    try:
+        llm = ChatOpenAI(temperature = 1)
+        vector_store = Pinecone.from_existing_index(index_name,OpenAIEmbeddings())
+        retriever = vector_store.as_retriever(search_type='similarity', search_kwargs={'k': 3})
+        crc = ConversationalRetrievalChain.from_llm(llm, retriever)
+        result = crc({'question': question, 'chat_history': chat_history})
+        chat_history.append((question, result['answer']))
+
+        return result['answer']
     except Exception as e:
         raise HTTPException(status_code=400, detail=f'Error:  {e}')
