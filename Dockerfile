@@ -1,5 +1,6 @@
 #It instructs Docker Engine to use the Python 3.8 image as the base image
-FROM python:3.8
+FROM generativeaiapi-web:latest
+#FROM python:3.8-slim-buster
 
 
 

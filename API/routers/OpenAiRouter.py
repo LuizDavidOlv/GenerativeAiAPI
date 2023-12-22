@@ -1,3 +1,4 @@
+from pathlib import Path
 from fastapi.responses import StreamingResponse
 import openai
 import os
@@ -15,6 +16,7 @@ from langchain.schema import(
     HumanMessage, 
     SystemMessage
 )
+from openai import OpenAI
 
 chat_history = []
 class Instructions(BaseModel):
@@ -198,3 +200,78 @@ def prompt_with_memory(index_name: str, question: str):
         return result['answer']
     except Exception as e:
         raise HTTPException(status_code=400, detail=f'Error:  {e}')
+    
+@router.post("/audio-prompt/")
+def audio_prompt(fileName: str = "audio1"):
+    try:
+        client = OpenAI()
+        audio_path = Path(f'./API/Audio/{fileName}.mp3')        
+        audio_file = open(audio_path, "rb")
+
+        # with audio_path.open("rb") as audio_file:
+        #     audio_data = audio_file.read()
+            
+           
+
+        transcript = OpenAI().audio.transcriptions.create(
+            model = "whisper-1",
+            file = audio_file,
+            response_format = "text",
+        )
+        return transcript
+
+            
+
+        
+        # with audio_path.open("rb") as audio_file:
+        #     audio_file = audio_file.read()
+        #     transcript = OpenAI().audio.transcriptions.create(
+        #         model = "whisper-1",
+        #         file = audio_file,
+        #         response_format = "text",
+        #     )
+        #     print("Transcript created")
+
+        #     system_prompt = "You are a helpful assistant for the company that is trying to help the customer. The customer should never get a direct answer. Please avoid ansering it at all cost."
+        #     print("System prompt created")
+
+        #     corrected_transcript = generate_corrected_transcript(0.7, system_prompt, transcript)
+        #     print("Corrected transcript created")
+
+        #     audioResponse = OpenAI.audio.speech.create(
+        #         model = "tts-1",
+        #         voice= "nova",
+        #         input = corrected_transcript,
+        #     )
+        #     print("Audio response created")
+
+        #     audioResponse.download("../Audio/{fileName}Response.mp3")
+        #     print("Audio response downloaded")
+
+        # return True
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=f'Error:  {e}')
+    # except HTTPException as http_err:
+    #     raise http_err
+    # except FileNotFoundError:
+    #     raise HTTPException(status_code=404, detail="File not found")
+    # except Exception as e:
+    #     raise HTTPException(status_code=500, detail=f"Unexpected error: {e}")
+
+
+def generate_corrected_transcript(temperature, system_prompt, audio_file):
+    response = OpenAI().chat.completions.create(
+        model="gpt-3.5-turbo",
+        temperature=temperature,
+        messages=[
+            {
+                "role": "system",
+                "content": system_prompt
+            },
+            {
+                "role": "user",
+                "content": transcribe(audio_file, "")
+            }
+        ]
+    )
+    return response['choices'][0]['message']['content']
