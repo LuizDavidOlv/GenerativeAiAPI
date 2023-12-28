@@ -1,6 +1,6 @@
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, JSONResponse
 from API.routers import OpenAiRouter, PineconeRouter, SpeechAndTextRouter
-from fastapi import FastAPI, FastAPI
+from fastapi import FastAPI, FastAPI, Request, HTTPException
 from dotenv import load_dotenv, find_dotenv
 import pinecone
 import os
@@ -52,3 +52,18 @@ def generate_html_response():
 @app.get("/items/", response_class=HTMLResponse)
 async def read_items():
     return generate_html_response()
+
+@app.exception_handler(Exception)
+async def general_exception_handler(request: Request, exc: Exception):
+    return JSONResponse(
+        status_code=500,
+        content={"message": f"An unexpected error occurred: {str(exc)}"},
+    )
+
+@app.exception_handler(HTTPException)
+async def http_exception_handler(request: Request, exc: HTTPException):
+    return JSONResponse(
+        status_code = exc.status_code,
+        content = { "message": exc.detail}
+    )
+

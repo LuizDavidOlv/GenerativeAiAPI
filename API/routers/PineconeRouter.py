@@ -22,52 +22,34 @@ router = APIRouter(
 
 @router.get("/version/")
 def version():
-    try:
-        return pinecone.info.version()
-    except Exception as e:
-        raise HTTPException(status_code=400, detail=f'Error:  {e}') 
+    return pinecone.info.version()
 
 @router.get("/list-indexes/")
 def list_indexes():
-    try:
-        return pinecone.list_indexes()
-    except Exception as e:
-        raise HTTPException(status_code=400, detail=f'Error:  {e.body}') 
+    return pinecone.list_indexes()
 
 @router.post("/describe-index/")
 def describe_index(index_name: str):
-    try:
-        return pinecone.describe_index(index_name)
-    except Exception as e:
-        raise HTTPException(status_code=400, detail=f'Error:  {e.body}')
+    return pinecone.describe_index(index_name)
 
 @router.post("/create-index/")
 def create_index(data: CreateIndexModel):
-    try:
-        return pinecone.create_index(data.index_name, dimension= data.dimension, metric = data.metric, pods= 1, pod_type='p1.x2')
-    except Exception as e:
-        raise HTTPException(status_code=400, detail=f'Error:  {e.body}') 
+    return pinecone.create_index(data.index_name, dimension= data.dimension, metric = data.metric, pods= 1, pod_type='p1.x2')
     
 @router.post("/upsert-index/")
 def upsert_index(index_name: str, text: str):
-    try:
-        text_splitter = RecursiveCharacterTextSplitter(
-            chunk_size=100,
-            chunk_overlap=20,
-            length_function=len
-        )
-        chunks = text_splitter.create_documents([text])
-        embeddings = OpenAIEmbeddings()
-        return Pinecone.from_documents(chunks,embeddings,index_name=index_name)
-    except Exception as e:
-        raise HTTPException(status_code=400, detail=f'Error:  {e.body}')
+    text_splitter = RecursiveCharacterTextSplitter(
+        chunk_size=100,
+        chunk_overlap=20,
+        length_function=len
+    )
+    chunks = text_splitter.create_documents([text])
+    embeddings = OpenAIEmbeddings()
+    return Pinecone.from_documents(chunks,embeddings,index_name=index_name)
 
 @router.delete("/delete-index")
 def delete_index(index_name: str):
-    try:
-        return pinecone.delete_index(index_name)
-    except Exception as e:
-        raise HTTPException(status_code=400, detail=f'Error:  {e.body}')
+    return pinecone.delete_index(index_name)
     
 
 

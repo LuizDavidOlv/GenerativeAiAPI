@@ -23,46 +23,35 @@ router = APIRouter(
 
 @router.post("/speech-into-text/")
 def speech_into_text(fileName: str = "audio1"):
-    try:
-        client = OpenAI()
-        audio_path = Path(f'./API/Audio/{fileName}.mp3')        
-        audio_file = open(audio_path, "rb")
+    client = OpenAI()
+    audio_path = Path(f'./API/Audio/{fileName}.mp3')        
+    audio_file = open(audio_path, "rb")
 
-        transcript = OpenAI().audio.transcriptions.create(
-            model = "whisper-1",
-            file = audio_file,
-            response_format = "text",
-        )
-        return transcript
-    
-    except Exception as e:
-        raise HTTPException(status_code=400, detail=f'Error:  {e}')
+    transcript = OpenAI().audio.transcriptions.create(
+        model = "whisper-1",
+        file = audio_file,
+        response_format = "text",
+    )
+    return transcript
 
 
 @router.post("/text-into-speech/")
 def text_into_speech(text: str = "Tell me about yourself. Something like your name, where you are from, what you do, and what you are passionate about."):
-    try:
-        audioResponse = OpenAI().audio.speech.create(
-                model = "tts-1",
-                voice= "nova",
-                input = text,
-            )
-        
-        audioResponse.stream_to_file("./API/Audio/TextToAudio.mp3")
-        return True   
-        
-    except Exception as e:
-        raise HTTPException(status_code=400, detail=f'Error:  {e}')
+    audioResponse = OpenAI().audio.speech.create(
+            model = "tts-1",
+            voice= "nova",
+            input = text,
+        )
+    
+    audioResponse.stream_to_file("./API/Audio/TextToAudio.mp3")
+    return True   
     
 @router.post("/audio-prompt/")
 def audio_prompt(fileName: str = "audio1"):
-    try:
-        transcript = speech_into_text(fileName)
-        llmResponse = call_openAi_llm(transcript)
-        audioResponse = text_into_speech(llmResponse)
-        return audioResponse
-    except Exception as e:
-        raise HTTPException(status_code=400, detail=f'Error:  {e}')
+    transcript = speech_into_text(fileName)
+    llmResponse = call_openAi_llm(transcript)
+    audioResponse = text_into_speech(llmResponse)
+    return audioResponse
 
 def call_openAi_llm(text: str):
     messages = [
