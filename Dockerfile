@@ -14,14 +14,7 @@ COPY API ./API
 
 #It will install the required packages
 #RUN apt-get update && apt-get install -y libpq-dev
-RUN pip install python-multipart
-RUN pip install tiktoken
-RUN pip install fastapi
-RUN pip install uvicorn
-RUN pip install python-dotenv
-RUN pip install openai
-RUN pip install langchain
-RUN pip install pinecone-client
+RUN pip install -r ./API/requirements.txt
 
 
 

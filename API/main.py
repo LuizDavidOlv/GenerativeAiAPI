@@ -1,5 +1,5 @@
 from fastapi.responses import HTMLResponse, JSONResponse
-from API.routers import OpenAiRouter, PineconeRouter, SpeechAndTextRouter
+from API.routers import OpenAiRouter, PineconeRouter, SpeechAndTextRouter, FineTunningRouter, AgentsRouter
 from fastapi import FastAPI, FastAPI, Request, HTTPException
 from dotenv import load_dotenv, find_dotenv
 import pinecone
@@ -29,6 +29,8 @@ app = FastAPI(
 app.include_router(OpenAiRouter.router)
 app.include_router(PineconeRouter.router)
 app.include_router(SpeechAndTextRouter.router)
+app.include_router(FineTunningRouter.router)
+app.include_router(AgentsRouter.router)
 
 def generate_html_response():
     html_content = """
