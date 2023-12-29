@@ -3,11 +3,13 @@ from fastapi.responses import StreamingResponse
 import openai
 import os
 import pinecone
+from openai import OpenAI
 from time import sleep
 from fastapi import HTTPException, APIRouter
 from pydantic import BaseModel
 from langchain import PromptTemplate
 from langchain.llms import OpenAI
+from langchain.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain.chat_models import ChatOpenAI
 from langchain.chains import LLMChain, RetrievalQA, ConversationalRetrievalChain, ConversationChain
 from langchain.embeddings import OpenAIEmbeddings
@@ -17,7 +19,7 @@ from langchain.schema import(
     HumanMessage, 
     SystemMessage
 )
-from openai import OpenAI
+
 
 chat_history = []
 class Instructions(BaseModel):
@@ -145,3 +147,6 @@ def prompt_with_memory( question: str):
     
     result = conversation.predict(input = question)
     return result
+
+
+    
