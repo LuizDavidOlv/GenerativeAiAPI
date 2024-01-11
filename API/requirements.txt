@@ -1,4 +1,7 @@
+uvicorn
 openai
+sentence-transformers
+python-multipart
 langchain
 pinecone-client
 python-dotenv
@@ -8,3 +11,9 @@ fastapi
 pydantic
 google-search-results
 numexpr
+huggingface_hub
+pgvector
+psycopg
+protobuf
+sqlalchemy
+sqlalchemy.orm

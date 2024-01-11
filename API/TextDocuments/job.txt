@@ -1,0 +1,60 @@
+Desenvolvedor (a) Full Stack – IA Generativa
+
+Faça parte de uma equipe que garante a integridade dos produtos da Dell Technologies e a satisfação dos clientes. Nossa equipe de Engenharia de Software (TI) transforma necessidades de negócios em soluções de tecnologia ao projetar, codificar e testar/depurar aplicações, bem como documentar procedimentos de uso e sempre buscar melhorias de qualidade.
+
+Junte-se a nós, desempenhe o melhor trabalho da sua carreira e cause um impacto social profundo como Desenvolvedor (a) Full Stack na nossa equipe de Dados do Cliente e Transformação da Tecnologia de Marketing no Brasil.
+
+O que você irá atingir:
+
+Como Desenvolvedor de Software / Arquiteto de Soluções, você desempenhará um papel crítico no desenvolvimento, implantação e manutenção de soluções e aplicativos de IA. Você trabalhará como parte de uma pequena equipe multifuncional, bem como com a Gestão de Produtos e Liderança para tomar decisões e compartilhar seu trabalho. Você colaborará com uma equipe multifuncional de cientistas de dados, engenheiros de aprendizado de máquina e desenvolvedores de software para arquitetar produtos robustos orientados por IA que lidam com desafios de negócios complexos. Você entregará protótipos de prova de conceito para testar novas tecnologias.
+
+Você irá:
+
+• Liderar o projeto, desenvolvimento e manutenção de componentes front-end e back-end de sistemas de IA, incluindo interfaces de usuário, pipelines de dados, APIs e integração de modelos de IA.
+
+•Trabalhar em estreita colaboração com cientistas de dados e engenheiros de aprendizado de máquina para integrar modelos de IA em sistemas de produção, garantindo que eles sejam escaláveis e eficientes. Construir pipelines de dados robustos para alimentar dados para modelos de IA generativa, garantindo prontidão e compatibilidade de dados com algoritmos de IA.
+
+• Criar interfaces front-end amigáveis e responsivas que permitam que os usuários finais interajam com recursos e insights orientados por IA. Projetar APIs para comunicação perfeita entre vários componentes do sistema de IA, permitindo recuperação de dados, previsões de modelos e monitoramento do sistema.
+
+• Executar testes unitários e procedimentos de depuração para garantir a confiabilidade e precisão de aplicativos de IA. Otimizar a arquitetura para garantir escalabilidade, desempenho e confiabilidade dos sistemas de IA à medida que crescem.
+
+• Implementar e seguir as melhores práticas de segurança para proteger modelos de IA, dados e infraestrutura de sistema. Manter documentação abrangente da arquitetura do sistema de IA, base de código e processos de implantação.
+
+Dê o primeiro passo em direção à carreira dos seus sonhos
+
+Todas as pessoas da nossa equipe agregam algo único. Veja o que estamos buscando para esta posição:
+
+Requisitos Essenciais
+
+• Forte compreensão de lógica e padrões de programação e experiência comprovada em duas ou mais linguagens de programação populares (por exemplo, Python, Java, JavaScript, etc.).
+
+• Experiência com frameworks front-end e bibliotecas (e.g., React, Angular, Vue.js).
+
+• Proficiência em tecnologias de desenvolvimento back-end (e.g., Node.js, Flask, Django, etc.).
+
+• Forte entendimento de APIs RESTful e serviços web.
+
+• Conhecimento de bancos de dados e gerenciamento de dados (SQL, NoSQL).
+
+Requisitos Desejáveis
+
+• Experiência com implantação de modelos de IA e IA generativa em aplicações do mundo real.
+
+• Conhecimento de frameworks de machine learning e deep learning como TensorFlow, PyTorch ou Keras.
+
+• Experiência com processamento de linguagem natural (PNL) e/ou visão computacional.
+
+Esta é nossa história. Agora, queremos conhecer a sua.
+
+Acreditamos que cada pessoa tem o poder de gerar impacto. É por isso que colocamos as pessoas da nossa equipe no centro de tudo o que fazemos. Se você está procurando uma oportunidade de desenvolver a sua carreira em um ambiente de trabalho inclusivo e diverso, com a tecnologia mais avançada do setor, estamos procurando por você.
+
+A Dell Technologies é uma família única de empresas que ajuda pessoas e organizações a transformar a forma como trabalham, vivem e se divertem. Junte-se a nós para construir um futuro que funcione para todas as pessoas, porque o progresso precisa de nós.
+
+Data de encerramento das inscrições: 15 de dezembro de 2023
+
+A Dell Technologies está comprometida com o princípio de oportunidades iguais de emprego para todas as pessoas, e em fornecer às pessoas da equipe um ambiente de trabalho livre de discriminação e assédio. Leia a nossa Política de Oportunidades de Emprego aqui.
+
+Management Level:
+
+Individual Contributor I8
+Additional Job Profiles may be considered:

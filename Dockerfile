@@ -14,6 +14,8 @@ COPY API ./API
 
 #It will install the required packages
 #RUN apt-get update && apt-get install -y libpq-dev
+RUN pip install --upgrade pip 
+RUN apt-get update && apt-get install -y libpq-dev
 RUN pip install -r ./API/requirements.txt
 
 
