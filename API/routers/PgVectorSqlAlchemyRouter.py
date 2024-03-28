@@ -11,6 +11,8 @@ from sentence_transformers import SentenceTransformer
 from pathlib import Path
 import os
 import uuid
+from langchain_community.embeddings import HuggingFaceEmbeddings
+from langchain_community.vectorstores.pgvector import PGVector
 
 router = APIRouter(
     prefix="/pg-vector",
@@ -84,7 +86,24 @@ def insert_into_table(table_name: str, vector_size: int = 768):
         session.rollback()
         raise Exception(str(e))
 
+@router.post("/insert-into-vector-db/")
+def insert_into_vector_db(text: str, table_name: str, vector_size: int = 1536, embedding_name: str = 'sangmini/msmarco-cotmae-MiniLM-L12_en-ko-ja'):
+    try:
+        # query_md = open("C:\\Git\\Gen AI\\genai-api\\api\db\\ms_sql_query_example.md", "r")
+        # query = query_md.read()
+        conn_string = os.getenv("PGVECTOR_CON_STRING")
+        embeddings = HuggingFaceEmbeddings(model_name = embedding_name)
 
+        pg_vector_store = PGVector(
+            connection_string=conn_string, 
+            embedding_function=embeddings
+        )
+
+        pg_vector_store.add_texts([text])
+        return True
+    except Exception as e:
+        raise Exception(str(e))
+    
 def load_documents_from_directory(directory_path: str):
     documentsPathList = []
 
