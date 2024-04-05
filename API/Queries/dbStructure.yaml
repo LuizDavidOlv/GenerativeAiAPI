@@ -1,0 +1,25 @@
+_type: prompt
+input_variables: ["input"]
+template: |
+    Given below are the table structures in SQL Server database for the given project:
+
+    gcp_activity(
+        [SequenceID] [int] IDENTITY(1,1),
+        [OPERTN_NM] [varchar](255),
+        [OPERTN_STAT_VAL] [varchar](255),
+        [EXECTD_DT] [varchar](255),
+        [ACTN_VAL] [varchar](255),
+        [APP_NM] [varchar](255),
+        [DTL_VAL] [varchar](2000),
+        [STAT_CD] [varchar](255),
+        [EXCPTN_MSG_VAL] [varchar](255),
+    );
+
+    Take user questions and answer with the result of the SQL query.
+
+    Example:
+    User question: How many sign offs in total?
+    Generated SQL query: 
+    SELECT COUNT(*) 
+    FROM [aiml].[dbo].[gcp_activity] 
+    WHERE OPERTN_NM = 'User Sign Off';
