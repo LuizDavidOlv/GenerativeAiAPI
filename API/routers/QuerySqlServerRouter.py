@@ -10,6 +10,7 @@ import pytz
 from fastapi import APIRouter, HTTPException
 import sqlalchemy
 
+from API.Prompts.messages import Messages
 from API.Prompts.promp_template import SQL_GENERATION_TEMPLATE
 from ../Prompts/promp_template import SQL_GENERATION_TEMPLATE
 from langchain.prompts import load_prompt, PromptTemplate
@@ -29,16 +30,18 @@ router = APIRouter(
 )
 
 @router.post("/query-sql-server/")
-async def query_sql_server(question: str):
+async def query_sql_server(question: str, collection_name: str = 'langchain'):
     try:
-        sqlquery = await database_lookup_internal(question,"langchain")
-        messages = [
-            SystemMessage(content='You are an expert on providing Dell Financial System information. Give a precise and accurate answer to the question below.Do not provide any additional information.'),
-            HumanMessage(content=f'Provide the answer to the question {question} based on the following SuccessfulUserActivity value:\n TEXT: {sqlquery}')
-        ]
         llm = OpenAI(model_name='text-davinci-003',temperature=1, max_tokens=512)
-        output = llm(messages)
-        return output.content
+        sql_query_result = await database_lookup_internal(question, collection_name)
+
+        if not sql_query_result:
+            return "Error in retriving sql server information."
+        
+        politeDfsEmployeeMessageConfig = Messages.get_dfs_employee_messages(question, sql_query_result)
+        result = llm(politeDfsEmployeeMessageConfig)
+
+        return result.content
     except Exception as e:
         logging.error('An error occurred while querying the database: %s', str(e))
         return False
@@ -65,29 +68,19 @@ def queryDB(text):
 
 @staticmethod
 async def database_lookup_internal(query: str, vdb_collection_name: str):
+    llm, sqlServerStore, pgVectorStore = get_initial_config(vdb_collection_name)
 
-    llm, sql_server_store, pg_vector_store = get_initial_config(vdb_collection_name)
+    operationTypesChain = await generate_sql_chain("Get all OPERTN_NM types",1, llm, pgVectorStore)
+    operationTypesQueryResult = await get_query_result(operationTypesChain, sqlServerStore)
 
-    operationTypesChain = await generate_sql_chain("Get all OPERTN_NM types",1, llm, pg_vector_store)
-    operationTypesQueryResult = await get_query_result(operationTypesChain, sql_server_store)
-
-
-    messages = [
-        SystemMessage(content='You are an expert in getting the correct operation type based on the user question. Only provide the operation type that is most similar to the one in the question itself. Do not provide any additional information.'),
-        HumanMessage(content=f'Provide the most similar type name among all the following types: {operationTypesQueryResult} ,for the provided question {query}')
-    ]
-
-    operation_type = llm(messages).content
-    uncheckedSqlQueryChain = await generate_sql_chain(query, 5, llm, pg_vector_store)
+    operationTypeMessagesConfig = Messages.get_operation_type_messages(operationTypesQueryResult,query)
+    operation_type = llm(operationTypeMessagesConfig).content
+    uncheckedSqlQueryChain = await generate_sql_chain(query, 5, llm, pgVectorStore)
     
-    messages = [
-        SystemMessage(content='You are an expert on correcting the microsoft sql server query. Only provide the query itself. Do not provide any additional information.'),
-        HumanMessage(content=f'Provide the correct query. OPERTN_NM should be equal to {operation_type} in the where clause on the following query: {uncheckedSqlQueryChain}')
-    ]
-
-    llmUpdatedQuery = llm(messages).content
-    revisedSqlQueryChain = await generate_sql_chain(llmUpdatedQuery, 5, llm, pg_vector_store)
-    revisedSqlQueryResult = await get_query_result(revisedSqlQueryChain, sql_server_store)
+    countOperationMessagesConfig = Messages.get_count_operation_messages(operation_type,uncheckedSqlQueryChain)
+    llmUpdatedQuery = llm(countOperationMessagesConfig).content
+    revisedSqlQueryChain = await generate_sql_chain(llmUpdatedQuery, 5, llm, pgVectorStore)
+    revisedSqlQueryResult = await get_query_result(revisedSqlQueryChain, sqlServerStore)
 
     return revisedSqlQueryResult
 
