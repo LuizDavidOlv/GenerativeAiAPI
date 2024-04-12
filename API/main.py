@@ -1,5 +1,6 @@
 from fastapi.responses import HTMLResponse, JSONResponse
-from API.routers import OpenAiRouter, PgVectorSqlAlchemyRouter, PineconeRouter, SpeechAndTextRouter, FineTunningRouter, AgentsRouter, HuggingFaceRouter, QuerySqlServerRouter
+from API.routers import OpenAiRouter, PgVectorSqlAlchemyRouter, PineconeRouter, SpeechAndTextRouter
+from API.routers import FineTunningRouter, AgentsRouter, HuggingFaceRouter, QuerySqlServerRouter, JwtAuthenticationRouter
 from fastapi import FastAPI, FastAPI, Request, HTTPException
 from dotenv import load_dotenv, find_dotenv
 import pinecone
@@ -34,6 +35,7 @@ app.include_router(AgentsRouter.router)
 app.include_router(HuggingFaceRouter.router)
 app.include_router(PgVectorSqlAlchemyRouter.router)
 app.include_router(QuerySqlServerRouter.router)
+app.include_router(JwtAuthenticationRouter.router)
 
 def generate_html_response():
     html_content = """
