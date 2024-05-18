@@ -1,24 +1,16 @@
-import os
-from fastapi import APIRouter
-from langchain.agents import tool, AgentExecutor, initialize_agent, AgentType, load_tools
-from langchain.prompts import ChatPromptTemplate, MessagesPlaceholder
-from langchain.agents.format_scratchpad import format_to_openai_function_messages
-from langchain.agents.output_parsers import OpenAIFunctionsAgentOutputParser
-from langchain.tools import Tool
-from langchain.tools.render import format_tool_to_openai_function
-from langchain.chat_models import ChatOpenAI
-from langchain.utilities import SerpAPIWrapper
-from langchain.chains import LLMMathChain
-from pydantic import BaseModel, Field
-from langchain_core.messages import AIMessage, HumanMessage
+import time
+from Imports.AgentsImports import *
+from sql_prompt_template import SQL_GENERATION_TEMPLATE
 
 router = APIRouter(
     prefix="/agents",
     tags=["Agents"]
 )
 
-SerpAPIWrapper.serpapi_api_key = os.environ.get('SERPAPI_API_KEY')
+load_dotenv(find_dotenv(), override=True)
+
 chat_history = []
+chat_history_string = ""
 
 class CalculatorInput(BaseModel):
     question: str = Field()
@@ -140,12 +132,70 @@ def prompt_with_memory( question: str):
     }
 
 
+@router.post("/re-act-agent/")
+def re_act_agent(question: str):
+     # sql_server_store = sqlalchemy.create_engine(sqlServerDbConnectionString, future=True)
+    tools = [TavilySearchResults(max_results=1)]
+    prompt = hub.pull("hwchase17/react")
+    llm = ChatOpenAI(model="gpt-3.5-turbo", temperature=1)
+    agent = create_react_agent(llm, tools, prompt)
+    agent_executor = AgentExecutor(agent=agent, tools=tools, verbose=True, handle_parsing_errors=True)
+    result = agent_executor.invoke({"input": question})
+    return result["output"]
 
+
+#! Not working. Need to understand how get chat_history_string value
+@router.post("/re-act-agent-with-chat-history/")
+def re_act_agent_with_chat_history(question: str):
+     # sql_server_store = sqlalchemy.create_engine(sqlServerDbConnectionString, future=True)
+    # get value from chat_history_string
+
+    toolsConfig = [TavilySearchResults(max_results=1)]
+    promptConfig = hub.pull("hwchase17/react-chat")
+    llmConfig = ChatOpenAI(model="gpt-3.5-turbo", temperature=1)
+    agent = create_react_agent(llm=llmConfig, tools=toolsConfig, prompt=promptConfig)
+    agent_executor = AgentExecutor(agent=agent, tools=toolsConfig, verbose=True, handle_parsing_errors=True)
+
+    request =  {
+        "input": {question},
+        # Notice that chat_history is a string, since this prompt is aimed at LLMs, not chat models
+        "chat_history": {chat_history_string},
+    }
+    result = agent_executor.invoke({request})
+    chat_history_string += f'Human: {question}\nAI: {result["output"]}\n'
+
+    return result["output"]
+
+
+@router.post("/re-act-sql-access/")
+def re_act_sql_access(question: str):
+    dbUri = os.getenv("SQL_CON_STRING_LOCAL")
+    dbConfig = SQLDatabase.from_uri(dbUri)
+    llmConfig = ChatOpenAI(model="gpt-3.5-turbo", temperature=1)
+    toolkitConfig = SQLDatabaseToolkit(db=dbConfig, llm=llmConfig)
+    db_agent = create_sql_agent(llm=llmConfig, toolkit=toolkitConfig, verbose=True, agent_type=AgentType.ZERO_SHOT_REACT_DESCRIPTION)
+
+    messages = [
+        SystemMessage(content=SQL_GENERATION_TEMPLATE),
+        HumanMessage(content=f'Provide only the answer to the question. Remove any aditional details:\n QUESTION: {question}')
+    ]
+    result = db_agent.run(messages)
+
+    return result
 
 @tool  
 def get_word_length(word: str) -> int:
     """Returns the length of a word"""
     return len(word)
+
+if __name__ == "__main__":
+    start = time.time()
+    result = re_act_sql_access("Whare are all the OPERTN_NM values?")
+    end = time.time()
+    print(f"Time taken: {end - start}")
+    print(result)
+
+
 
 
 

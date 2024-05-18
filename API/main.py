@@ -6,6 +6,7 @@ from dotenv import load_dotenv, find_dotenv
 import pinecone
 import os
 import openai
+import uvicorn
 
 load_dotenv(find_dotenv(), override=True)
 
@@ -73,4 +74,7 @@ async def http_exception_handler(request: Request, exc: HTTPException):
         status_code = exc.status_code,
         content = { "message": exc.detail}
     )
+
+if(__name__ == "__main__"):
+    uvicorn.run(app, host="0.0.0.0", port=8000)
 
