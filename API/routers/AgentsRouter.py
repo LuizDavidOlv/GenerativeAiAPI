@@ -90,6 +90,10 @@ def prompt_with_memory( question: str):
         ]
     )
 
+    #? Lambda functions are a type of High Order Function (HOF).
+    #? The pipe character (|) is a custom function that leverages HOFs to achieve monadic composition. 
+    #? Monadic composition is a way to chain functions together, where the output of one function is the input of the next.
+
     agentConfig = (
         {
             "input": lambda x: x["input"],
@@ -126,11 +130,8 @@ def prompt_with_memory( question: str):
     result = {
         "conversation": chat_history,
     }
-
-    return {
-        "conversation": chat_history
-    }
-
+    
+    return result
 
 @router.post("/re-act-agent/")
 def re_act_agent(question: str):
@@ -147,9 +148,7 @@ def re_act_agent(question: str):
 #! Not working. Need to understand how get chat_history_string value
 @router.post("/re-act-agent-with-chat-history/")
 def re_act_agent_with_chat_history(question: str):
-     # sql_server_store = sqlalchemy.create_engine(sqlServerDbConnectionString, future=True)
     # get value from chat_history_string
-
     toolsConfig = [TavilySearchResults(max_results=1)]
     promptConfig = hub.pull("hwchase17/react-chat")
     llmConfig = ChatOpenAI(model="gpt-3.5-turbo", temperature=1)
@@ -189,10 +188,7 @@ def get_word_length(word: str) -> int:
     return len(word)
 
 if __name__ == "__main__":
-    start = time.time()
     result = re_act_sql_access("Whare are all the OPERTN_NM values?")
-    end = time.time()
-    print(f"Time taken: {end - start}")
     print(result)
 
 
