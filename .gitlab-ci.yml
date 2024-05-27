@@ -3,18 +3,42 @@ image: python:3.9
 stages:
   - build
   # - test
+  - cache
+
+cache:
+  key: ${CI_COMMIT_REF_SLUG}
+  paths:
+    - .cache/pip
+    - venv/
 
 before_script:
-  - cd API
+  - apt-get update && apt-get install -y libpq-dev
+  - python -m venv venv
+  - source venv/bin/activate
+  - pip install --upgrade pip
 
 build api:
   stage: build
   except:
     - schedules
-  script:
-    - apt-get update && apt-get install -y libpq-dev
+  script: 
+    - source venv/bin/activate
     - pip install -r requirements.txt
     - uvicorn main:app --host 0.0.0.0  --port 8000
+  cache:
+    policy: pull-push
+  
+cache update:
+  stage: cache
+  script:
+    - source venv/bin/activate
+    - pip install -r requirements.txt
+  cache:
+    policy: push
+  only:
+    - schedules
+
+
 
 # test artifact:
 #   image: alpine
