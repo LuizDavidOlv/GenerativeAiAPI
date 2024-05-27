@@ -137,6 +137,7 @@ def prompt_with_memory( question: str):
 def re_act_agent(question: str):
      # sql_server_store = sqlalchemy.create_engine(sqlServerDbConnectionString, future=True)
     tools = [TavilySearchResults(max_results=1)]
+    #TODO: Create a prompt that is more specific to the task at hand. Store it in a file and load it here
     prompt = hub.pull("hwchase17/react")
     llm = ChatOpenAI(model="gpt-3.5-turbo", temperature=1)
     agent = create_react_agent(llm, tools, prompt)
