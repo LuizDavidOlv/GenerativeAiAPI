@@ -3,7 +3,7 @@ from fastapi import Depends, HTTPException
 from fastapi import APIRouter
 from fastapi.security import OAuth2PasswordBearer
 import jwt
-from jwt import PyJWTError
+#from jwt import PyJWTError
 
 router = APIRouter(
     prefix="/authorization",
@@ -40,8 +40,8 @@ async def get_current_user(token: str = Depends(OAuth2PasswordBearer(tokenUrl="l
         if username is None:
             raise HTTPException(status_code=401, detail="Invalid token")
         return username
-    except PyJWTError:
-        raise HTTPException(status_code=401, detail="Invalid token")
+    except:
+        raise HTTPException(status_code=401, detail=f'Invalid token')
 
 @router.get("/protected")
 async def protected_route(current_user: str = Depends(get_current_user)):

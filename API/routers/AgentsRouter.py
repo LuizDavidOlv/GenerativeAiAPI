@@ -1,6 +1,6 @@
 import time
-from Imports.AgentsImports import *
-from sql_prompt_template import SQL_GENERATION_TEMPLATE
+from routers.Imports.AgentsImports import *
+from .sql_prompt_template import SQL_GENERATION_TEMPLATE
 
 router = APIRouter(
     prefix="/agents",

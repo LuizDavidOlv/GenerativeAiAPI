@@ -1,6 +1,5 @@
 from fastapi.responses import HTMLResponse, JSONResponse
-from API.routers import OpenAiRouter, PgVectorSqlAlchemyRouter, PineconeRouter, SpeechAndTextRouter
-from API.routers import FineTunningRouter, AgentsRouter, HuggingFaceRouter, QuerySqlServerRouter, JwtAuthenticationRouter
+from routers import OpenAiRouter, SpeechAndTextRouter, FineTunningRouter, AgentsRouter, HuggingFaceRouter, QuerySqlServerRouter, JwtAuthenticationRouter
 from fastapi import FastAPI, FastAPI, Request, HTTPException
 from dotenv import load_dotenv, find_dotenv
 import pinecone
@@ -10,10 +9,10 @@ import uvicorn
 
 load_dotenv(find_dotenv(), override=True)
 
-pinecone.init(
-    api_key=os.environ.get('PINECONE_API_KEY'),
-    environment=os.environ.get('PINECONE_ENV')
-)
+# pinecone.init(
+#     api_key=os.environ.get('PINECONE_API_KEY'),
+#     environment=os.environ.get('PINECONE_ENV')
+# )
 
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
@@ -29,12 +28,12 @@ app = FastAPI(
 
 
 app.include_router(OpenAiRouter.router)
-app.include_router(PineconeRouter.router)
+#app.include_router(PineconeRouter.router)
 app.include_router(SpeechAndTextRouter.router)
 app.include_router(FineTunningRouter.router)
 app.include_router(AgentsRouter.router)
 app.include_router(HuggingFaceRouter.router)
-app.include_router(PgVectorSqlAlchemyRouter.router)
+#app.include_router(PgVectorSqlAlchemyRouter.router)
 app.include_router(QuerySqlServerRouter.router)
 app.include_router(JwtAuthenticationRouter.router)
 

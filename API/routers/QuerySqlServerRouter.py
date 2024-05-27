@@ -10,9 +10,8 @@ import pytz
 from fastapi import APIRouter, HTTPException
 import sqlalchemy
 
-from API.Prompts.messages import Messages
-from API.Prompts.prompt_template import SQL_GENERATION_TEMPLATE
-from ../Prompts/promp_template import SQL_GENERATION_TEMPLATE
+from Prompts.messages import Messages
+from Prompts.prompt_template import SQL_GENERATION_TEMPLATE
 from langchain.prompts import load_prompt, PromptTemplate
 from langchain.chains import LLMChain
 from langchain_community.vectorstores.pgvector import PGVector
