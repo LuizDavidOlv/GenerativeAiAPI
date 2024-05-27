@@ -1,0 +1,36 @@
+stages:
+  - build
+  # - test
+
+before_script:
+  - cd API
+
+build api:
+  stage: build
+  except:
+    - schedules
+  script:
+    - pip install -r requirements.txt
+    - uvicorn.run(app, host="0.0.0.0", port=8000)
+
+
+# test artifact:
+#   image: alpine
+#   stage: test
+#   except:
+#     - schedules
+#   cache:
+#     paths: []
+#   script:
+#     - grep -q "Gatsby" ./public/index.html
+
+# test website:
+#   stage: test
+#   except:
+#     - schedules
+#   script:
+#     - npm install
+#     - npm install -g gatsby-cli
+#     - gatsby serve &
+#     - sleep 3
+#     - curl "http://localhost:9000" | tac | tac | grep -q "Gatsby"
