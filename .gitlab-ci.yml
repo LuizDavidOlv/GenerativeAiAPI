@@ -10,6 +10,7 @@ cache:
   paths:
     - .cache/pip
     - venv/
+  policy: pull
 
 before_script:
   - cd API

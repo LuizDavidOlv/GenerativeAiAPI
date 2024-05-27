@@ -4,3 +4,7 @@ API/routers/__pycache__
 API/routers/Imports/__pycache__/AgentsImports.cpython-312.pyc
 Tests/__pycache__/PgVectorLangchaintest.cpython-312-pytest-8.0.2.pyc
 Tests/__pycache__/PgVectorLangchainTest.cpython-312.pyc
+API/routers/Imports/__pycache__/AgentsImports.cpython-311.pyc
+API/Prompts/__pycache__/prompt_template.cpython-311.pyc
+API/Prompts/__pycache__/messages.cpython-311.pyc
+API/Models/__pycache__/PineconeCreateIndexModel.cpython-311.pyc
