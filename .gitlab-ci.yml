@@ -6,17 +6,16 @@ stages:
   - cache
 
 cache:
-  key: ${CI_COMMIT_REF_SLUG}
+  key: 'SingleCacheKey'
   paths:
     - .cache/pip
-    - venv/
+    - .venv/
   policy: pull
 
 before_script:
   - cd API
   - apt-get update && apt-get install -y libpq-dev
-  - python -m venv venv
-  - source venv/bin/activate
+  - source .venv/bin/activate
   - pip install --upgrade pip
 
 build api:
@@ -24,7 +23,7 @@ build api:
   except:
     - schedules
   script:   
-    - source venv/bin/activate
+    - source .venv/bin/activate
     - pip install -r requirements.txt
     - uvicorn main:app --host 0.0.0.0  --port 8000 --reload &
     - sleep 5
@@ -34,7 +33,7 @@ build api:
 cache update:
   stage: cache
   script:
-    - source venv/bin/activate
+    - source .venv/bin/activate
     - pip install -r requirements.txt
   cache:
     policy: push
