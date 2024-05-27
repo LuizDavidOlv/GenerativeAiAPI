@@ -15,6 +15,7 @@ cache:
 before_script:
   - cd API
   - apt-get update && apt-get install -y libpq-dev
+  - python -m venv venv
   - source venv/bin/activate
   - pip install --upgrade pip
 
