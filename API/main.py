@@ -1,8 +1,9 @@
 from fastapi.responses import HTMLResponse, JSONResponse
-from routers import OpenAiRouter, SpeechAndTextRouter, FineTunningRouter, AgentsRouter, HuggingFaceRouter, QuerySqlServerRouter, JwtAuthenticationRouter
+from Vault.Bootstrap import Globle
+from routers import OpenAiRouter, SpeechAndTextRouter, FineTunningRouter, AgentsRouter#, PgVectorSqlAlchemyRouter
+from routers import HuggingFaceRouter, QuerySqlServerRouter, JwtAuthenticationRouter
 from fastapi import FastAPI, FastAPI, Request, HTTPException
 from dotenv import load_dotenv, find_dotenv
-import pinecone
 import os
 import openai
 import uvicorn
@@ -24,6 +25,7 @@ app = FastAPI(
     docs_url="/api/v1/docs",
     redoc_url="/api/v1/redoc",
     swagger_ui=True  # This line enables Swagger UI
+    on_startup = [Globle.Settings]
 )
 
 
@@ -77,4 +79,3 @@ async def http_exception_handler(request: Request, exc: HTTPException):
 if(__name__ == "__main__"):
     uvicorn.run(app, host="0.0.0.0", port=8000)
 
-# Test commit
