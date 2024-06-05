@@ -17,5 +17,5 @@ class Globle:
     #apilogger.configure();
 
     # get the kv path for openai from the config.ini and check if it is enabled
-    if f(AppConfiguration.get_value("hc-opensource", "enable")):
+    if f(AppConfiguration.get_value("hc-openai-llm", "enable")):
         Llm.get_kv()

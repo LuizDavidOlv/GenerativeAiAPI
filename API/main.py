@@ -24,7 +24,7 @@ app = FastAPI(
     openapi_url="/api/v1/openapi.json",
     docs_url="/api/v1/docs",
     redoc_url="/api/v1/redoc",
-    swagger_ui=True  # This line enables Swagger UI
+    swagger_ui=True,  # This line enables Swagger UI
     on_startup = [Globle.Settings]
 )
 

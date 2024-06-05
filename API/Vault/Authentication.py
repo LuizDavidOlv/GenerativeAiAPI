@@ -37,3 +37,6 @@ class Authentication(Vault):
             # logger.error("- [error] Failed to authenticate with vault.")
             # logger.error(e)
             raise Exception("- Failed to authenticate with vault.")
+
+
+
