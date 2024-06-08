@@ -1,4 +1,5 @@
 uv
+hvac
 PyJWT
 sentence-transformers
 python-multipart
