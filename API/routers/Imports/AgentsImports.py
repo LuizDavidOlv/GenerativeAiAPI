@@ -1,4 +1,5 @@
 import os
+import time
 import openai
 from dotenv import load_dotenv, find_dotenv
 from fastapi import APIRouter
@@ -23,3 +24,4 @@ from langchain.schema import(
     HumanMessage, 
     SystemMessage
 )
+from Prompts.sql_prompt_template import SQL_GENERATION_TEMPLATE
