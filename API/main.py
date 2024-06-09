@@ -26,7 +26,7 @@ app = FastAPI(
     on_startup = [Globle.Settings]
 )
 
-
+app.include_router(LangGraphRouter.router)
 app.include_router(OpenAiRouter.router)
 #app.include_router(PineconeRouter.router)
 app.include_router(SpeechAndTextRouter.router)
@@ -36,7 +36,7 @@ app.include_router(HuggingFaceRouter.router)
 #app.include_router(PgVectorSqlAlchemyRouter.router)
 app.include_router(QuerySqlServerRouter.router)
 app.include_router(JwtAuthenticationRouter.router)
-app.include_router(LangGraphRouter.router)
+
 
 def generate_html_response():
     html_content = """
