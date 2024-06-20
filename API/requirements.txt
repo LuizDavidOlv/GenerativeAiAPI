@@ -28,5 +28,6 @@ pip-system-certs==4.0
 fastapi==0.110.0
 pydantic==2.6.3
 uvicorn==0.29.0
-IPython
-aiosqlite
+IPython==8.25.0
+aiosqlite==0.20.0
+tavily-python==0.3.3
