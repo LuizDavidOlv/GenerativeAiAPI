@@ -1,5 +1,5 @@
 from Prompts.SystemMessagePrompt import SYSTEM_MESSAGE
-from RulesBasedLlm import Evaluation
+from Evaluations.RuleBasedEvaluation import Evaluation
 
 
 def test_science_quiz():
