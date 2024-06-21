@@ -30,7 +30,7 @@ def test_refusal_rome():
     )
 
 if __name__ == "__main__":
-    # test_science_quiz()
-    # test_geography_quiz()
+    test_science_quiz()
+    test_geography_quiz()
     test_refusal_rome()
     print("All tests passed!")

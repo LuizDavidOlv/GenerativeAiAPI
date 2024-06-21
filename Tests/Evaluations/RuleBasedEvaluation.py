@@ -28,10 +28,10 @@ class Evaluation:
             output_parser=StrOutputParser()
     ):
         assistant = Evaluation.assistant_chain(
-            human_template,
-            system_message,
-            llm,
-            output_parser
+            system_message=system_message,
+            human_template = human_template,
+            llm=llm,
+            output_parser=output_parser
             )
         
         answer = assistant.invoke({"question": question})
