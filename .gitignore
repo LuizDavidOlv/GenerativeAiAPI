@@ -1,4 +1,3 @@
 API/.env
 Test/.env
 **/__pycache__/*
-Tests/Prompts/__pycache__/SystemMessagePrompt.cpython-311.pyc
