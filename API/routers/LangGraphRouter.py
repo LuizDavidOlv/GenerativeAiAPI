@@ -24,7 +24,7 @@ async def lang_graph_agent(question: str):
     result = abot.graph.invoke({"messages": messages})
     return result['messages'][-1].content
 
-#! Endpoint not streaming
+
 @router.post("/lang-graph-memory-agent")
 async def lang_graph_agent(question: str, threadNumber ="1"):
     prompt = """You are a smart research assistant. Use the search engine to look up information. \
@@ -36,12 +36,16 @@ async def lang_graph_agent(question: str, threadNumber ="1"):
     abot = MemoryAgent(model, [tool], system=prompt, checkpointerConfig=memory_with_stream)
     messages = [HumanMessage(content=question)]
     thread = {"configurable": {"thread_id": threadNumber}}
-    async for event in abot.graph.astream_events({"messages": messages}, thread, version="v1"):
-        kind = event["event"]
-        if kind == "on_chat_model_stream":
-            content = event["data"]["chunk"].content
-            if content:
-                print( content+ " || ")
+    async def event_generator():
+        async for event in abot.graph.astream_events({"messages": messages}, thread, version="v1"):
+            kind = event["event"]
+            if kind == "on_chat_model_stream":
+                content = event["data"]["chunk"].content
+                if content:
+                    yield content
+    
+    # return StreamingResponse(event_generator(), media_type="text/plain")
+    return StreamingResponse(event_generator(), media_type="text/event-stream")
             
     # for event in abot.graph.stream({"messages": messages}, thread):
     #     for v in event.values():
