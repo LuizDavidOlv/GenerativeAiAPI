@@ -28,3 +28,9 @@ def test_refusal_rome():
         question=question,
         decline_response=decline_response
     )
+
+if __name__ == "__main__":
+    # test_science_quiz()
+    # test_geography_quiz()
+    test_refusal_rome()
+    print("All tests passed!")

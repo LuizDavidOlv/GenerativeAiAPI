@@ -31,4 +31,5 @@ QUIZ_BANK = """1. Subject: Leonardo DaVinci
    Facts:
     - The sun doesn't change color during sunset.
     - Water slows the speed of light
-    - The Eiffel Tower in Paris is taller in the summer than the winter due to expansion of the metal."""
+    - The Eiffel Tower in Paris is taller in the summer than the winter due to expansion of the metal.
+"""
