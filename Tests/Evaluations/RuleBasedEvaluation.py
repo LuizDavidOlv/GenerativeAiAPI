@@ -2,8 +2,8 @@ from langchain.prompts import ChatPromptTemplate
 from langchain.chat_models import ChatOpenAI
 from langchain.schema.output_parser import StrOutputParser
 
-class Evaluation:
-    def eval_expected_words(
+class RuleBasedEvaluation:
+    def eval_expected_words(self,
             system_message,
             question,
             expected_words,
@@ -11,7 +11,7 @@ class Evaluation:
             llm=ChatOpenAI(model="gpt-3.5-turbo", temperature=0),
             output_parser=StrOutputParser()
     ):
-        assistant = Evaluation.assistant_chain(system_message, human_template, llm, output_parser)
+        assistant = self.assistant_chain(system_message, human_template, llm, output_parser)
         answer = assistant.invoke({"question": question})
         
         assert any(word in answer.lower() \
@@ -19,7 +19,7 @@ class Evaluation:
                         f"Expected the assistant questions to include \
                             '{expected_words}', but it did not"
 
-    def evaluate_refusal(
+    def evaluate_refusal(self,
             system_message,
             question,
             decline_response,
@@ -27,7 +27,7 @@ class Evaluation:
             llm=ChatOpenAI(model="gpt-3.5-turbo", temperature=0),
             output_parser=StrOutputParser()
     ):
-        assistant = Evaluation.assistant_chain(
+        assistant = self.assistant_chain(
             system_message=system_message,
             human_template = human_template,
             llm=llm,
@@ -42,7 +42,7 @@ class Evaluation:
 
         
 
-    def assistant_chain(
+    def assistant_chain(self,
             system_message,
             human_template="{question}",
             llm = ChatOpenAI(model="gpt-3.5-turbo", temperature=0),
