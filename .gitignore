@@ -1,9 +1,9 @@
 API/.env
 API/__pycache__
-API/routers/__pycache__
-API/routers/Imports/__pycache__/*
+API/Routers/__pycache__
+API/Routers/Imports/__pycache__/*
 Tests/__pycache__/*
-API/routers/Imports/__pycache__/*
+API/Routers/Imports/__pycache__/*
 API/Prompts/__pycache__/*
 API/Models/__pycache__/*
 API/Vault/__pycache__/*

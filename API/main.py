@@ -1,7 +1,7 @@
 from fastapi.responses import HTMLResponse, JSONResponse
 from Vault.Bootstrap import Globle
-from routers import OpenAiRouter, SpeechAndTextRouter, FineTunningRouter, AgentsRouter#, PgVectorSqlAlchemyRouter
-from routers import HuggingFaceRouter, QuerySqlServerRouter, JwtAuthenticationRouter
+from Routers import (OpenAiRouter, SpeechAndTextRouter, FineTunningRouter, AgentsRouter, HuggingFaceRouter, QuerySqlServerRouter, 
+    JwtAuthenticationRouter, LangGraphRouter, EssayWriterRouter) 
 from fastapi import FastAPI, FastAPI, Request, HTTPException
 from dotenv import load_dotenv, find_dotenv
 import os
@@ -15,8 +15,6 @@ load_dotenv(find_dotenv(), override=True)
 #     environment=os.environ.get('PINECONE_ENV')
 # )
 
-openai.api_key = os.getenv("OPENAI_API_KEY")
-
 app = FastAPI(
     title="Generative AI API",
     description="LLM Generative AI Serving",
@@ -28,7 +26,8 @@ app = FastAPI(
     on_startup = [Globle.Settings]
 )
 
-
+app.include_router(EssayWriterRouter.router)
+app.include_router(LangGraphRouter.router)
 app.include_router(OpenAiRouter.router)
 #app.include_router(PineconeRouter.router)
 app.include_router(SpeechAndTextRouter.router)
@@ -38,6 +37,7 @@ app.include_router(HuggingFaceRouter.router)
 #app.include_router(PgVectorSqlAlchemyRouter.router)
 app.include_router(QuerySqlServerRouter.router)
 app.include_router(JwtAuthenticationRouter.router)
+
 
 def generate_html_response():
     html_content = """

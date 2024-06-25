@@ -1,6 +1,4 @@
-import time
-from routers.Imports.AgentsImports import *
-from .sql_prompt_template import SQL_GENERATION_TEMPLATE
+from Routers.Imports.AgentsImports import *
 
 router = APIRouter(
     prefix="/agents",
