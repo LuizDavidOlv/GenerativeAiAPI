@@ -1,8 +1,12 @@
 from langchain.prompts import ChatPromptTemplate
 from langchain.chat_models import ChatOpenAI
 from langchain.schema.output_parser import StrOutputParser
+from dotenv import load_dotenv, find_dotenv
 
+
+load_dotenv(find_dotenv())
 class RuleBasedEvaluation:
+
     def eval_expected_words(self,
             system_message,
             question,
