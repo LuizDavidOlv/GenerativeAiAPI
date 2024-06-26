@@ -34,3 +34,4 @@ tavily-python==0.3.3
 IPython==8.25.0
 aiosqlite==0.20.0
 tavily-python==0.3.3
+pytest==8.2.2
