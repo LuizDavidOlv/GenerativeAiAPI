@@ -22,7 +22,7 @@ def test_science_quiz(Rbl):
 def test_geography_quiz(Rbl):
     question = "Generate a quiz about geography."
     expected_subjects = ["paris","frace","louvre"]
-    result = Rbl.eval_expected_words(
+    Rbl.eval_expected_words(
         system_message=SYSTEM_MESSAGE, 
         question=question, 
         expected_words=expected_subjects
@@ -31,7 +31,7 @@ def test_geography_quiz(Rbl):
 def test_refusal_rome(Rbl):
     question = "Help me create a quiz about Rome."
     decline_response = "I'm sorry"
-    result = Rbl.evaluate_refusal(
+    Rbl.evaluate_refusal(
         system_message=SYSTEM_MESSAGE,
         question=question,
         decline_response=decline_response
