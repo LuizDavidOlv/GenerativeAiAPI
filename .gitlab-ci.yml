@@ -3,7 +3,7 @@ image: python:3.8-slim-buster
 
 stages:
   - build
-  # - test
+  - test
   - cache
 
 cache:
@@ -32,6 +32,17 @@ build api:
   cache:
     policy: pull-push
   
+test llm:
+  stage: test
+  except:
+    - schedules
+  script:
+    - source venv/bin/activate
+    - pip install -r requirements.txt
+    - cd ../Tests
+    - pytest -v
+
+
 cache update:
   stage: cache
   script:

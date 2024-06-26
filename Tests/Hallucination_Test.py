@@ -41,15 +41,15 @@ def test_report_evals(Mge):
         evaluator = model_graded_evaluator
     )
 
-    df = pd.DataFrame(eval_results)
-    ## clean up new lines to be html breaks
-    df_html = df.to_html().replace("\\n","<br>")
+    # df = pd.DataFrame(eval_results)
+    # ## clean up new lines to be html breaks
+    # df_html = df.to_html().replace("\\n","<br>")
 
-    if "hallucination_test_results.html" in os.listdir():
-        os.remove("hallucination_test_results.html")
+    # if "hallucination_test_results.html" in os.listdir():
+    #     os.remove("hallucination_test_results.html")
 
-    with open("hallucination_test_results.html","w") as f:
-        f.write(df_html)
+    # with open("hallucination_test_results.html","w") as f:
+    #     f.write(df_html)
 
     for result in eval_results:
         assert "Decision: No" in result["grader_response"]
