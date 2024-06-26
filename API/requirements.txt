@@ -13,7 +13,7 @@ protobuf
 sqlalchemy
 sqlalchemy.orm
 pandas
-langgraph==0.0.65
+langgraph==0.0.1
 langchain_openai== 0.1.8
 python-dotenv==1.0.1
 openai==1.16.0
