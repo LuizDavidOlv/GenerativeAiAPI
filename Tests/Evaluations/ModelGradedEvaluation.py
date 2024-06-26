@@ -35,3 +35,19 @@ class ModelGradedEvaluation:
 
         return eval_prompt | llm | StrOutputParser()
     
+    def evaluate_dataset(self,dataset, quiz_bank, assistant, evaluator):
+        eval_results = []
+        for row in dataset:
+            eval_result = {}
+            user_input = row["input"]
+            answer = assistant.invoke({"question": user_input})
+            eval_response = evaluator.invoke({"context": quiz_bank, "agent_response": answer})
+
+            eval_result["input"] = user_input
+            eval_result["output"] = answer
+            eval_result["grader_response"] = eval_response
+
+            eval_results.append(eval_result)
+        
+        return eval_results
+    
