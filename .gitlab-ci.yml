@@ -1,5 +1,5 @@
 # image: luizcunhaoliveira/python_0:latest
-image: python:3.8-slim-buster
+image: python:3.11.8-slim-buster
 
 stages:
   - build
