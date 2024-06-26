@@ -36,7 +36,7 @@ test llm:
   except:
     - schedules
   script:
-    - cd ../Tests
+    - cd Tests
     - pytest -v
 
 
