@@ -37,6 +37,7 @@ test llm:
     - schedules
   script:
     - cd Tests
+    - ls -la
     - pytest -v
 
 
