@@ -50,7 +50,8 @@ def test_report_evals(Mge):
 
     # with open("hallucination_test_results.html","w") as f:
     #     f.write(df_html)
-
+    #TODO: figure out how to upload the html file to gitlab
+    
     for result in eval_results:
         assert "Decision: No" in result["grader_response"]
     

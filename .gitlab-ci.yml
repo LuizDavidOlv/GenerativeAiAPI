@@ -37,10 +37,7 @@ test llm:
     - schedules
   script:
     - cd Tests
-    - chmod +x GenerateQuiz_Test.py 
-    - chmod +x Hallucination_Test.py
-    - pytest -vv GenerateQuiz_Test.py Hallucination_Test.py
-
+    - pytest -vv
 
 cache update:
   stage: cache
