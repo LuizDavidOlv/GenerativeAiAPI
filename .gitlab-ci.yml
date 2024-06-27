@@ -1,5 +1,5 @@
-# image: luizcunhaoliveira/python_0:latest
-image: python:3.11.8
+image: luizcunhaoliveira/python_0:latest
+#image: python:3.11.8
 
 stages:
   - build
@@ -14,11 +14,11 @@ cache:
   policy: pull
 
 before_script:
-  - apt-get update && apt-get install -y libpq-dev
+  #- apt-get update && apt-get install -y libpq-dev
   - python -m venv venv
   - source venv/bin/activate
-  - pip install --upgrade pip
-  - pip install -r requirements.txt
+  #- pip install --upgrade pip
+  #- pip install -r requirements.txt
 
 build api:
   stage: build

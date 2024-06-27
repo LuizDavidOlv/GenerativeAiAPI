@@ -1,6 +1,7 @@
 #It instructs Docker Engine to use the Python 3.8 image as the base image
 #FROM generativeaiapi-web:latest
 #FROM python:3.8-slim-buster
+#FROM python:3.11.8
 FROM luizcunhaoliveira/python_0:latest
 
 
@@ -18,9 +19,9 @@ WORKDIR /entry/API
 
 #It will install the required packages
 #RUN apt-get update && apt-get install -y libpq-dev
-RUN pip install --upgrade pip 
-RUN apt-get update && apt-get install -y libpq-dev
-RUN pip install -r ./requirements.txt
+# RUN pip install --upgrade pip 
+# RUN apt-get update && apt-get install -y libpq-dev
+# RUN pip install -r ./requirements.txt
 
 
 
