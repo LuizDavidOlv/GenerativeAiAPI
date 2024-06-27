@@ -39,7 +39,7 @@ test llm:
     - cd Tests
     - chmod +x GenerateQuiz_Test.py 
     - chmod +x Hallucination_Test.py
-    - pytest -vv
+    - pytest -vv test_generate_quiz.py test_hallucination.py
 
 
 cache update:
