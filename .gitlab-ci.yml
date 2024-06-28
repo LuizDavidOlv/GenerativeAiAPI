@@ -40,12 +40,14 @@ test llm:
     - schedules
   script:
     - cd Tests
-    - pytest -vv
+    - mkdir -p tests_reports
+    - pytest -vv --junitxml=tests_reports/junit.xml
   artifacts:
     when: always
     expire_in: 1 hour
     paths:
-      - tests_reports/
+      - Tests/tests_reports/
+      - Tests/tests_reports/hallucination_tests_results.html
     reports:
-      junit: tests_reports/junit.xml
+      junit: Tests/tests_reports/junit.xml
 
