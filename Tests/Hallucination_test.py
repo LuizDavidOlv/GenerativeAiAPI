@@ -45,7 +45,9 @@ def test_report_evals(Mge):
     ## clean up new lines to be html breaks
     df_html = df.to_html().replace("\\n","<br>")
 
-    if "hallucination_test_results.html" in os.listdir():
+    os.makedirs("tests_reports", exist_ok=True)
+
+    if "tests_reports/hallucination_test_results.html" in os.listdir():
         os.remove("tests_reports/hallucination_test_results.html")
 
     with open("tests_reports/hallucination_test_results.html","w") as f:
