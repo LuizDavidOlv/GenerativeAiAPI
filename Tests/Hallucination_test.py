@@ -46,9 +46,9 @@ def test_report_evals(Mge):
     df_html = df.to_html().replace("\\n","<br>")
 
     if "hallucination_test_results.html" in os.listdir():
-        os.remove("tests_results/hallucination_test_results.html")
+        os.remove("tests_reports/hallucination_test_results.html")
 
-    with open("tests_results/hallucination_test_results.html","w") as f:
+    with open("tests_reports/hallucination_test_results.html","w") as f:
         f.write(df_html)
     
     for result in eval_results:
