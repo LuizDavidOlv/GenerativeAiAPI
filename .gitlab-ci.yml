@@ -1,24 +1,25 @@
 image: luizcunhaoliveira/python_0:latest
-#image: python:3.11.8
 
 stages:
   - build
   - test
-  - cache
+
+variables:
+  PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
 
 cache:
-  key: 'SingleCacheKey'
+  key: ${CI_COMMIT_REF_SLUG}
   paths:
     - .cache/pip
     - venv/
-  policy: pull
+    - API/
+    - Tests/
+
 
 before_script:
-  #- apt-get update && apt-get install -y libpq-dev
   - python -m venv venv
   - source venv/bin/activate
-  #- pip install --upgrade pip
-  #- pip install -r requirements.txt
+
 
 build api:
   stage: build
@@ -28,8 +29,10 @@ build api:
     - cd API
     - uvicorn main:app --host 0.0.0.0  --port 8000 --reload &
     - sleep 5
-  cache:
-    policy: pull-push
+  artifacts:
+    expire_in: 1 hour
+    paths:
+      - API/
   
 test llm:
   stage: test
@@ -38,36 +41,11 @@ test llm:
   script:
     - cd Tests
     - pytest -vv
+  artifacts:
+    when: always
+    expire_in: 1 hour
+    paths:
+      - tests_reports/
+    reports:
+      junit: tests_reports/junit.xml
 
-cache update:
-  stage: cache
-  script:
-    - source venv/bin/activate
-    - pip install -r requirements.txt
-  cache:
-    policy: push
-  only:
-    - schedules
-
-
-# test api:
-# test artifact:
-#   image: alpine
-#   stage: test
-#   except:
-#     - schedules
-#   cache:
-#     paths: []
-#   script:
-#     - grep -q "Gatsby" ./public/index.html
-
-# test website:
-#   stage: test
-#   except:
-#     - schedules
-#   script:
-#     - npm install
-#     - npm install -g gatsby-cli
-#     - gatsby serve &
-#     - sleep 3
-#     - curl "http://localhost:9000" | tac | tac | grep -q "Gatsby"
