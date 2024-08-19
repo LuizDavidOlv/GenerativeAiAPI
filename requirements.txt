@@ -10,6 +10,8 @@ langchain-community==0.0.25
 langchain_openai==0.1.5
 langgraph==0.0.51
 langsmith==0.1.19
+loguru==0.7.2
+llama_index==0.10.65
 openai==1.16.0
 #!numexpr
 pandas==2.2.2

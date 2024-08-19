@@ -1,11 +1,9 @@
 from fastapi.responses import HTMLResponse, JSONResponse
 from Vault.Bootstrap import Globle
 from Routers import (OpenAiRouter, SpeechAndTextRouter, FineTunningRouter, AgentsRouter, HuggingFaceRouter, QuerySqlServerRouter, 
-    JwtAuthenticationRouter, LangGraphRouter, EssayWriterRouter) 
+    JwtAuthenticationRouter, LangGraphRouter, EssayWriterRouter, LlamaIndexRouter) 
 from fastapi import FastAPI, FastAPI, Request, HTTPException
 from dotenv import load_dotenv, find_dotenv
-import os
-import openai
 import uvicorn
 
 load_dotenv(find_dotenv(), override=True)
@@ -26,6 +24,7 @@ app = FastAPI(
     on_startup = [Globle.Settings]
 )
 
+app.include_router(LlamaIndexRouter.router)
 app.include_router(EssayWriterRouter.router)
 app.include_router(LangGraphRouter.router)
 app.include_router(OpenAiRouter.router)
@@ -37,6 +36,7 @@ app.include_router(HuggingFaceRouter.router)
 #app.include_router(PgVectorSqlAlchemyRouter.router)
 app.include_router(QuerySqlServerRouter.router)
 app.include_router(JwtAuthenticationRouter.router)
+
 
 
 def generate_html_response():
