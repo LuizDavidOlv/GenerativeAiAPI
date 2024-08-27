@@ -1,10 +1,9 @@
-
-#!aiohttp==3.9.5
 aiosqlite==0.20.0
+black==24.8.0
 fastapi==0.110.0
-#!google-search-results
 huggingface_hub==0.23.1
 IPython==8.25.0
+isort== 5.13.2
 langchain==0.1.11
 langchain-community==0.0.25
 langchain_openai==0.1.5
@@ -13,24 +12,15 @@ langsmith==0.1.19
 loguru==0.7.2
 llama_index==0.10.65
 openai==1.16.0
-#!numexpr
 pandas==2.2.2
 pgvector==0.2.5
-#!pinecone-client
 pip-system-certs==4.0
-#!protobuf
 psycopg2-binary==2.9.9
-#!ptvsd
 pydantic==2.6.3
-#!pyodbc==5.1.0
 pytest==8.2.2
 python-dotenv==1.0.1
-#!python-multipart
 PyJWT==2.8.0
-#!sentence-transformers
 sqlalchemy==2.0.30
 sqlalchemy.orm==1.2.10
-#!tavily-python==0.3.3
 tiktoken==0.5.2
-#!urllib3==2.0.3
 uvicorn==0.29.0

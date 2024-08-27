@@ -1,11 +1,12 @@
-from fastapi.responses import HTMLResponse, JSONResponse
-from Vault.Bootstrap import Globle
-# from Routers import (OpenAiRouter, SpeechAndTextRouter, FineTunningRouter, AgentsRouter, HuggingFaceRouter, QuerySqlServerRouter, 
-#     JwtAuthenticationRouter, LangGraphRouter, EssayWriterRouter, LlamaIndexRouter) 
-from Routers import routers as routers_dict
-from fastapi import FastAPI, FastAPI, Request, HTTPException
-from dotenv import load_dotenv, find_dotenv
 import uvicorn
+from dotenv import find_dotenv, load_dotenv
+from fastapi import FastAPI, HTTPException, Request
+from fastapi.responses import HTMLResponse, JSONResponse
+
+# from Routers import (OpenAiRouter, SpeechAndTextRouter, FineTunningRouter, AgentsRouter, HuggingFaceRouter, QuerySqlServerRouter,
+#     JwtAuthenticationRouter, LangGraphRouter, EssayWriterRouter, LlamaIndexRouter)
+from Routers import routers as routers_dict
+from Vault.Bootstrap import Globle
 
 load_dotenv(find_dotenv(), override=True)
 
@@ -22,7 +23,7 @@ app = FastAPI(
     docs_url="/api/v1/docs",
     redoc_url="/api/v1/redoc",
     swagger_ui=True,  # This line enables Swagger UI
-    on_startup = [Globle.Settings]
+    on_startup=[Globle.Settings],
 )
 
 for version, routers in routers_dict.items():
@@ -53,6 +54,7 @@ def generate_html_response():
 async def read_items():
     return generate_html_response()
 
+
 @app.exception_handler(Exception)
 async def general_exception_handler(request: Request, exc: Exception):
     return JSONResponse(
@@ -60,13 +62,11 @@ async def general_exception_handler(request: Request, exc: Exception):
         content={"message": f"An unexpected error occurred: {str(exc)}"},
     )
 
+
 @app.exception_handler(HTTPException)
 async def http_exception_handler(request: Request, exc: HTTPException):
-    return JSONResponse(
-        status_code = exc.status_code,
-        content = { "message": exc.detail}
-    )
+    return JSONResponse(status_code=exc.status_code, content={"message": exc.detail})
 
-if(__name__ == "__main__"):
+
+if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)
-

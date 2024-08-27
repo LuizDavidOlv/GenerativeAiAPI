@@ -35,7 +35,7 @@
 # @router.post("/create-index/")
 # def create_index(data: CreateIndexModel):
 #     return pinecone.create_index(data.index_name, dimension= data.dimension, metric = data.metric, pods= 1, pod_type='p1.x2')
-    
+
 # @router.post("/upsert-index/")
 # def upsert_index(index_name: str, text: str):
 #     text_splitter = RecursiveCharacterTextSplitter(
@@ -50,6 +50,3 @@
 # @router.delete("/delete-index")
 # def delete_index(index_name: str):
 #     return pinecone.delete_index(index_name)
-    
-
-

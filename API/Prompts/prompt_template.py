@@ -11,4 +11,4 @@ Here are a few examples:
 {context}
 -------------------------------------------------------------------------------------------------------------------------
 
-Microsoft SQL Server query: """ 
+Microsoft SQL Server query: """

@@ -33,4 +33,4 @@ Columns
     EXECTD_DT format = 'YYYY-MM-DD HH:MM:SS:MS'
 -------------------------------------------------------------------------------------------------------------------------
 
-Microsoft SQL Server query: """ 
+Microsoft SQL Server query: """

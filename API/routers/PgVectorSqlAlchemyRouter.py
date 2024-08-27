@@ -73,7 +73,7 @@
 #         Base = declarative_base()
 #         class Item(Base):
 #             __tablename__= table_name
-            
+
 #             id = mapped_column(Text, primary_key=True)
 #             embedding = mapped_column(Vector(vector_size))
 
@@ -95,7 +95,7 @@
 #         embeddings = HuggingFaceEmbeddings(model_name = embedding_name)
 
 #         pg_vector_store = PGVector(
-#             connection_string=conn_string, 
+#             connection_string=conn_string,
 #             embedding_function=embeddings
 #         )
 
@@ -103,7 +103,7 @@
 #         return True
 #     except Exception as e:
 #         raise Exception(str(e))
-    
+
 # def load_documents_from_directory(directory_path: str):
 #     documentsPathList = []
 
@@ -120,10 +120,10 @@
 #     for file in fileNameList:
 #         loader = TextLoader(file)
 #         document = loader.load()
-        
+
 #         documentsText += document[0].page_content
 #         documentsText += " "
-    
+
 #     return documentsText
 
 # def chunk_text(text: str, chunkSize: int = 100, chunkOverlap: int = 10):
