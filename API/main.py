@@ -1,7 +1,8 @@
 from fastapi.responses import HTMLResponse, JSONResponse
 from Vault.Bootstrap import Globle
-from Routers import (OpenAiRouter, SpeechAndTextRouter, FineTunningRouter, AgentsRouter, HuggingFaceRouter, QuerySqlServerRouter, 
-    JwtAuthenticationRouter, LangGraphRouter, EssayWriterRouter, LlamaIndexRouter) 
+# from Routers import (OpenAiRouter, SpeechAndTextRouter, FineTunningRouter, AgentsRouter, HuggingFaceRouter, QuerySqlServerRouter, 
+#     JwtAuthenticationRouter, LangGraphRouter, EssayWriterRouter, LlamaIndexRouter) 
+from Routers import routers as routers_dict
 from fastapi import FastAPI, FastAPI, Request, HTTPException
 from dotenv import load_dotenv, find_dotenv
 import uvicorn
@@ -24,19 +25,9 @@ app = FastAPI(
     on_startup = [Globle.Settings]
 )
 
-app.include_router(LlamaIndexRouter.router)
-app.include_router(EssayWriterRouter.router)
-app.include_router(LangGraphRouter.router)
-app.include_router(OpenAiRouter.router)
-#app.include_router(PineconeRouter.router)
-app.include_router(SpeechAndTextRouter.router)
-app.include_router(FineTunningRouter.router)
-app.include_router(AgentsRouter.router)
-app.include_router(HuggingFaceRouter.router)
-#app.include_router(PgVectorSqlAlchemyRouter.router)
-app.include_router(QuerySqlServerRouter.router)
-app.include_router(JwtAuthenticationRouter.router)
-
+for version, routers in routers_dict.items():
+    for router in routers:
+        app.include_router(router, prefix=f"/{version}")
 
 
 def generate_html_response():
