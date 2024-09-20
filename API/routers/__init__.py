@@ -1,4 +1,4 @@
-from Routers import (AgentsRouter, EssayWriterRouter, FineTunningRouter,
+from Routers import (ProcessorRouter, AgentsRouter, EssayWriterRouter, FineTunningRouter,
                      HuggingFaceRouter, JwtAuthenticationRouter,
                      LangGraphRouter, LlamaIndexRouter, OpenAiRouter,
                      QuerySqlServerRouter, SpeechAndTextRouter)
@@ -14,6 +14,7 @@ v1_routers = [
     SpeechAndTextRouter.router,
     JwtAuthenticationRouter.router,
     LlamaIndexRouter.router,
+    ProcessorRouter.router,
 ]
 
 routers = {"v1:": v1_routers}

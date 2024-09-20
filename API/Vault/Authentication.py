@@ -4,7 +4,7 @@ import os
 import requests
 from dotenv import find_dotenv, load_dotenv
 
-from Vault.Client import Vault
+from Vault.VaultModel import Vault
 
 load_dotenv(find_dotenv(), override=True)
 
